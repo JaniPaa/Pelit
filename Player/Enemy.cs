@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SerializeField]
-public class Enemy : MonoBehaviour {
+public class Enemy : PieceController {
 
 
 	public float speed;
