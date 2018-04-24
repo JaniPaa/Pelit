@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 	private ButtonController buttonRight;
 	private ButtonController buttonUp;
 	private ButtonController buttonDown;
-
+	Room rooms;
 
 	void Start ()
 	{
@@ -22,21 +22,21 @@ public class GameController : MonoBehaviour
 		buttonDown = GameObject.Find ("ButtonDown").GetComponent<ButtonController> ();
 	}
 
-	// Chech if any movement buttons are pressed.
+	// Check if any movement buttons are pressed.
 	void Update ()
 	{
-		if (buttonRight.GetButtonPressed () || Input.GetKeyDown("d")){
+		if (buttonRight.GetButtonPressed () || Input.GetKey("d")){
 			pieceCtrl.Move ("right");
 		}
-		if (buttonLeft.GetButtonPressed () || Input.GetKeyDown("a")) {
+		if (buttonLeft.GetButtonPressed () || Input.GetKey("a")) {
 			pieceCtrl.Move ("left");
 		}
-		if (buttonUp.GetButtonPressed () || Input.GetKeyDown("w")) {
+		if (buttonUp.GetButtonPressed () || Input.GetKey("w")) {
 			pieceCtrl.Move ("up");
 		}
-		if (buttonDown.GetButtonPressed () || Input.GetKeyDown("s")) {
+		if (buttonDown.GetButtonPressed () || Input.GetKey("s")) {
 			pieceCtrl.Move ("down");
 		}
-			
+
 	}
 }

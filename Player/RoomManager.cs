@@ -1,23 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+[SerializeField]
 public class RoomManager : MonoBehaviour {
 
-	private string roomName;
-	// Use this for initialization
-
-	void Start () {
-		
+	// Changes scene
+	public void loadRoom(string room)
+	{
+		SceneManager.LoadScene (room);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	//
-	//public string GetLevel()
-	//{
-	//	string temp = "LEVEL:";
-	//}
 }

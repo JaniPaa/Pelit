@@ -7,18 +7,18 @@ public class Enemy : MonoBehaviour {
 
 
 	public float speed;
-
+	private PieceController doorOpener;
 	private Transform target;
-
 
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
-
+		doorOpener = new PieceController ();
 	}
-	
-	// Update is called once per frame
+	// Moves the enemy towards the player's coordinates
 	void Update () {
-
-		transform.position = Vector2.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+		if (doorOpener.openDoor == true) {
+			transform.position = Vector2.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
+			doorOpener.openDoor = true;
+		}
 	}
 }
