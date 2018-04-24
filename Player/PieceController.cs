@@ -15,11 +15,18 @@ public class PieceController : MonoBehaviour{
 	Text textNextLevel;
 	Text textGameOver;
 	RoomManager roomer;
-	public bool openDoor = true;
+	public static bool openDoor = false;
 
+	// Checks if the door has been opened
 	public bool checkDoorOpen()
 	{
 		openDoor = true;
+		return openDoor;
+	}
+	// If the player dies, the door is closed again
+	public bool resetDoor()
+	{
+		openDoor = false;
 		return openDoor;
 	}
 
@@ -52,6 +59,7 @@ public class PieceController : MonoBehaviour{
 			other.gameObject.SetActive (false);
 			textGameOver.text = endGame ();
 			Application.LoadLevel (Application.loadedLevel);
+			resetDoor ();
 		}
 	}
 		
