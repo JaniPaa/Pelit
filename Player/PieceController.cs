@@ -10,12 +10,18 @@ public class PieceController : MonoBehaviour{
 	private bool onCollision = false;
 	Inventory inventory;
 	Item keyItem;
+	Item crowbarItem;
 	Text textPlayerInventory;
 	List<Item> door = new List<Item>();
 	Text textNextLevel;
 	Text textGameOver;
+	Text textKeyFound;
 	RoomManager roomer;
 	public static bool openDoor = false;
+	Room rooms;
+	Room kitchen;
+	public static string currentLevel = "Cell";
+	TextTimer tTimer;
 
 	// Checks if the door has been opened
 	public bool checkDoorOpen()
@@ -40,8 +46,17 @@ public class PieceController : MonoBehaviour{
 			inventory.AddItem (keyItem);
 			textPlayerInventory.text = inventory.GetInventoryList ();
 			door.Add (keyItem);
+			tTimer.itemFound ("Cell Key");
+			tTimer.itemMessage ();
+			textKeyFound.text = "Cell Key";
 		}
-		// If player comes in contact with cell door with cell key in his inventory, the door will open and inventory will be refreshed
+		if (other.gameObject.CompareTag ("Crowbar")) {
+			other.gameObject.SetActive (false);
+			inventory.AddItem (crowbarItem);
+			textPlayerInventory.text = inventory.GetInventoryList ();
+			door.Add (crowbarItem);
+		}
+		// If player comes in contact with cell door with cell key in his inventory, the door will open and inventory will be refreshed and the enemies wake up
 		if(other.gameObject.CompareTag("CellDoor") && door.Contains(keyItem)){
 			other.gameObject.SetActive (false);
 			door.Remove (keyItem);
@@ -52,14 +67,25 @@ public class PieceController : MonoBehaviour{
 		}
 		// If player touches door in the wall, Room2 loads
 		if(other.gameObject.CompareTag("Level")){
-			roomer.loadRoom ("Room2");
+			resetDoor ();
+			roomer.getCurrentLevel ("Hallway");
+			textNextLevel.text = currentLevel;
+			roomer.loadRoom ("CEV3Scene 1");
+
 		}
 		// If player is hit by enemy, it calls gameover method and the room restarts
 		if (other.gameObject.CompareTag ("Enemy")) {
 			other.gameObject.SetActive (false);
 			textGameOver.text = endGame ();
-			Application.LoadLevel (Application.loadedLevel);
+			roomer.resetLevel ();
 			resetDoor ();
+
+		}
+		// Loads level 3 when player hits door with crowbar in his inventory
+		if (other.gameObject.CompareTag ("Level3") && door.Contains(crowbarItem)) {
+			roomer.getCurrentLevel ("Kitchen");
+			textNextLevel.text = currentLevel;
+			roomer.loadRoom ("CEV3Scene 2");
 		}
 	}
 		
@@ -91,12 +117,18 @@ public class PieceController : MonoBehaviour{
 		textPlayerInventory.text = (" Inventory: " + "\n - Empty -");
 		inventory = new Inventory();
 		keyItem = new Item ("Cell Key");
+		crowbarItem = new Item ("Crowbar");
 		textGameOver = GameObject.Find ("TextGameOver").GetComponent<Text> ();
+		textNextLevel = GameObject.Find ("TextLevel").GetComponent<Text> ();
+		rooms = new Room ("Hallway");
+		kitchen = new Room ("Kitchen");
+		textNextLevel.text = currentLevel;
+		textKeyFound = GameObject.Find ("TextItemFound").GetComponent<Text> ();
 	}
 	// Displays "Game Over!" message
 	public string endGame()
 	{
-		string end = "Game Over!";
+		string end = "You Died!";
 		return end;
 	}
 }

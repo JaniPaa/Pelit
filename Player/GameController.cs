@@ -11,7 +11,8 @@ public class GameController : MonoBehaviour
 	private ButtonController buttonRight;
 	private ButtonController buttonUp;
 	private ButtonController buttonDown;
-	Room rooms;
+	DialogueManager dialogue;
+	RawImage bgImage;
 
 	void Start ()
 	{
@@ -20,6 +21,9 @@ public class GameController : MonoBehaviour
 		buttonRight = GameObject.Find ("ButtonRight").GetComponent<ButtonController> ();
 		buttonUp = GameObject.Find ("ButtonUp").GetComponent<ButtonController> ();
 		buttonDown = GameObject.Find ("ButtonDown").GetComponent<ButtonController> ();
+		//dialogue = GameObject.Find ("Dialogue").GetComponent<DialogueManager> ();
+		//bgImage = GameObject.Find ("BackgroundImage").GetComponent<RawImage> ();
+		//dialogue.ManageDialogue ();
 	}
 
 	// Check if any movement buttons are pressed.

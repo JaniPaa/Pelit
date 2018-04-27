@@ -4,11 +4,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [SerializeField]
-public class RoomManager : MonoBehaviour {
+public class RoomManager : PieceController {
 
 	// Changes scene
 	public void loadRoom(string room)
 	{
 		SceneManager.LoadScene (room);
 	}
+
+	public string getCurrentLevel(string lvl)
+	{
+		PieceController.currentLevel = lvl;
+
+		return lvl;
+	}
+
+	public void resetLevel()
+	{
+		Application.LoadLevel (Application.loadedLevel);
+	}
+
+
 }
