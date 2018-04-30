@@ -11,7 +11,8 @@ public class GameController : MonoBehaviour
 	private ButtonController buttonRight;
 	private ButtonController buttonUp;
 	private ButtonController buttonDown;
-	Room rooms;
+	DialogueManager dialogue;
+	RawImage bgImage;
 
 	void Start ()
 	{
@@ -20,21 +21,24 @@ public class GameController : MonoBehaviour
 		buttonRight = GameObject.Find ("ButtonRight").GetComponent<ButtonController> ();
 		buttonUp = GameObject.Find ("ButtonUp").GetComponent<ButtonController> ();
 		buttonDown = GameObject.Find ("ButtonDown").GetComponent<ButtonController> ();
+		//dialogue = GameObject.Find ("Dialogue").GetComponent<DialogueManager> ();
+		//bgImage = GameObject.Find ("BackgroundImage").GetComponent<RawImage> ();
+		//dialogue.ManageDialogue ();
 	}
 
 	// Check if any movement buttons are pressed.
 	void Update ()
 	{
-		if (buttonRight.GetButtonPressed () || Input.GetKey("d")){
+		if (buttonRight.GetButtonPressed () || Input.GetKeyDown("d")){
 			pieceCtrl.Move ("right");
 		}
-		if (buttonLeft.GetButtonPressed () || Input.GetKey("a")) {
+		if (buttonLeft.GetButtonPressed () || Input.GetKeyDown("a")) {
 			pieceCtrl.Move ("left");
 		}
-		if (buttonUp.GetButtonPressed () || Input.GetKey("w")) {
+		if (buttonUp.GetButtonPressed () || Input.GetKeyDown("w")) {
 			pieceCtrl.Move ("up");
 		}
-		if (buttonDown.GetButtonPressed () || Input.GetKey("s")) {
+		if (buttonDown.GetButtonPressed () || Input.GetKeyDown("s")) {
 			pieceCtrl.Move ("down");
 		}
 

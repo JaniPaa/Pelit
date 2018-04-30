@@ -14,11 +14,10 @@ public class Enemy : PieceController {
 		target = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
 		doorOpener = new PieceController ();
 	}
-	// Moves the enemy towards the player's coordinates
+	// Moves the enemy towards the player's coordinates when the door has been opened
 	void Update () {
-		if (doorOpener.openDoor == true) {
+		if (PieceController.openDoor == true) {
 			transform.position = Vector2.MoveTowards (transform.position, target.position, speed * Time.deltaTime);
-			doorOpener.openDoor = true;
 		}
 	}
 }

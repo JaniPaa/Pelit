@@ -5,17 +5,28 @@ using UnityEngine.UI;
 
 public class Room : MonoBehaviour {
 
-	private string room;
+	private string roomName;
 
-	private Room ()
+	public string RoomName
 	{
-		this.room = "Cell";
+		get
+		{
+			return roomName;
+		}
+		set
+		{
+			this.roomName = value;
+		}
+		
 	}
 
-	public void getRoom(string currentRoom)
+	public Room (string roomName)
 	{
-		this.room = currentRoom;
+		RoomName = roomName;
 	}
-
+	public Room ()
+	{
+		RoomName = "Cell";
+	}
 
 }
