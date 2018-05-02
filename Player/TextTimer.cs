@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TextTimer : MonoBehaviour {
 
 	Text textKeyFound;
-	public float time = 5;
+	public float time = 3;
 	public static string found;
 
 	IEnumerator Start ()
@@ -18,13 +18,11 @@ public class TextTimer : MonoBehaviour {
 
 	public string itemFound(string item)
 	{
-		found = "You found " + item + "!";
 		return found;
 	}
-
-	public string itemMessage()
+		
+	public void getString(string item)
 	{
-		textKeyFound.text = found;
-		return textKeyFound.text;
+		found = "You found " + item + "!";
 	}
 }

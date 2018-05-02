@@ -6,7 +6,7 @@ using System;
 
 public class PieceController : MonoBehaviour{
 
-	public float pieceSpeed = 1;
+	public float pieceSpeed = 1f;
 	private bool onCollision = false;
 	Inventory inventory;
 	Item keyItem;
@@ -35,7 +35,7 @@ public class PieceController : MonoBehaviour{
 		openDoor = false;
 		return openDoor;
 	}
-
+		
 	// Collisions with different objects are detected. Tag indicates what object has been hit
 	void OnCollisionEnter2D (Collision2D other)
 	{
@@ -46,9 +46,6 @@ public class PieceController : MonoBehaviour{
 			inventory.AddItem (keyItem);
 			textPlayerInventory.text = inventory.GetInventoryList ();
 			door.Add (keyItem);
-			tTimer.itemFound ("Cell Key");
-			tTimer.itemMessage ();
-			textKeyFound.text = "Cell Key";
 		}
 		if (other.gameObject.CompareTag ("Crowbar")) {
 			other.gameObject.SetActive (false);
@@ -75,7 +72,6 @@ public class PieceController : MonoBehaviour{
 		}
 		// If player is hit by enemy, it calls gameover method and the room restarts
 		if (other.gameObject.CompareTag ("Enemy")) {
-			other.gameObject.SetActive (false);
 			textGameOver.text = endGame ();
 			roomer.resetLevel ();
 			resetDoor ();
@@ -86,6 +82,14 @@ public class PieceController : MonoBehaviour{
 			roomer.getCurrentLevel ("Kitchen");
 			textNextLevel.text = currentLevel;
 			roomer.loadRoom ("CEV3Scene 2");
+			resetDoor ();
+		}
+
+		if (other.gameObject.CompareTag ("CrowbarDoor") && door.Contains (crowbarItem)) {
+			other.gameObject.SetActive (false);
+			door.Remove(crowbarItem);
+			inventory.RemoveItem(crowbarItem);
+			textPlayerInventory.text = inventory.GetInventoryList();
 		}
 	}
 		
@@ -93,26 +97,29 @@ public class PieceController : MonoBehaviour{
 	public void Move (string dir)
 	{
 		if (!onCollision) {
+			
 			if (dir == "right") {
 				transform.Translate (pieceSpeed * 0.05f, 0, 0);
 			}
 			if (dir == "left") {
 				transform.Translate (pieceSpeed * -0.05f, 0, 0);
+
 			}
 			if (dir == "up") {
 				transform.Translate (pieceSpeed * 0, 0.05f, 0);
+
 			}
 			if (dir == "down") {
 				transform.Translate (pieceSpeed * 0, -0.05f, 0);
+
 			}
 		}
 	}
 
-
 	// Use this for initialization
 	void Start ()
 	{
-		roomer = new RoomManager ();
+		roomer = GetComponent<RoomManager> ();
 		textPlayerInventory = GameObject.Find ("TextPlayerInventory").GetComponent<Text> ();
 		textPlayerInventory.text = (" Inventory: " + "\n - Empty -");
 		inventory = new Inventory();
@@ -123,7 +130,7 @@ public class PieceController : MonoBehaviour{
 		rooms = new Room ("Hallway");
 		kitchen = new Room ("Kitchen");
 		textNextLevel.text = currentLevel;
-		textKeyFound = GameObject.Find ("TextItemFound").GetComponent<Text> ();
+		//textKeyFound = GameObject.Find ("TextKeyFound").GetComponent<Text> ();
 	}
 	// Displays "Game Over!" message
 	public string endGame()
